@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+    tools {
+     maven 'maven 3.6.1'
+    }
+
+    stages {
+        stage('build') {
+            steps {
+                echo 'this is worker build job'
+                dir('worker'){
+                sh 'mvn compile'
+                }
+            }
+       }
+       stage('test') {
+           steps {
+               echo 'this is worker test job'
+           }
+
+       }
+       stage('package'){
+           steps{
+               echo 'this is package job'
+           }
+       }
+    }
+    post{
+    always{
+    echo 'build pipeline for worker is complete'
+          }
+    }
+}
