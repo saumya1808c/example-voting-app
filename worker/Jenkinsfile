@@ -21,9 +21,7 @@ pipeline {
                }
            }
            }
-
-       }
-       stage('package'){
+        stage('package'){
            steps{
                echo 'this is package job'
                dir('worker'){
@@ -31,7 +29,6 @@ pipeline {
                }
            }
            }
-       }
     }
     post{
     always{
