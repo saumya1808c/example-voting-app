@@ -16,18 +16,27 @@ pipeline {
        stage('test') {
            steps {
                echo 'this is worker test job'
+               dir('worker'){
+               sh 'mvn clean test'
+               }
+           }
            }
 
        }
        stage('package'){
            steps{
                echo 'this is package job'
+               dir('worker'){
+               sh 'mvn package -DskipTests'
+               }
+           }
            }
        }
     }
     post{
     always{
-    echo 'build pipeline for worker is complete'
+    archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+    echo 'pipeline for worker is complete'
           }
     }
 }
