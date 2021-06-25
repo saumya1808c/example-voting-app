@@ -6,9 +6,9 @@ pipeline {
 
     stages {
         stage('build') {
-        when {
-                changeset: "**/worker/**"
-            }
+          when{
+                changeset "**/worker/**"
+               }
             steps {
                 echo 'this is worker build job'
                 dir('worker'){
@@ -18,7 +18,7 @@ pipeline {
        }
        stage('test') {
        when {
-                changeset: "**/worker/**"
+                changeset "**/worker/**"
             }
            steps {
                echo 'this is worker test job'
@@ -30,7 +30,7 @@ pipeline {
         stage('package'){
         when {
                  branch 'master'
-                 changeset: "**/worker/**"
+                 changeset "**/worker/**"
              }
            steps{
                echo 'this is package job'
