@@ -1,7 +1,8 @@
 pipeline {
     agent {
       docker{
-       image 'node:8.16-alpine'
+       image 'python:2.7.16-slim'
+       args '--user root'
             }
           }
 
@@ -9,24 +10,23 @@ pipeline {
     stages {
         stage('build') {
           when{
-                changeset "**/result/**"
+                changeset "**/vote/**"
                }
             steps {
-                echo 'this is result build job'
-                dir('result'){
-                sh 'npm install'
+                echo 'this is vote build job'
+                dir('vote'){
+                sh 'pip install -r requirements.txt'
                 }
             }
        }
        stage('test') {
        when {
-                changeset "**/result/**"
+                changeset "**/vote/**"
             }
            steps {
-               echo 'this is result test job'
-               dir('result'){
-               sh 'npm install'
-               sh 'npm test'
+               echo 'this is vote test job'
+               dir('vote'){
+               sh 'nosetests -v'
                }
            }
            }
@@ -34,7 +34,7 @@ pipeline {
     }
     post{
     always{
-    echo 'pipeline for result is complete'
+    echo 'pipeline for vote is complete'
           }
     failure{
     slackSend (channel: "instavote-cd" , message:"Build failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)")
