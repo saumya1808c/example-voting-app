@@ -53,7 +53,7 @@ pipeline {
               echo 'packaging worker app into a jarfile'
               dir('worker'){
                    sh 'mvn package -DskipTests'
-                   archiveArtifacts artifacts: '**/target/*.jar', fingerprint:True
+                   archiveArtifacts artifacts: '**/target/*.jar', fingerprint:true
                 }
           }
         }
@@ -64,8 +64,8 @@ pipeline {
                      branch 'master'
                     changeset "**/worker/**"
                 }
-              steps{
-                  echo 'this is docker-package job'
+                steps{
+                     echo 'Packging worker app with docker'
                   script{
                   docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin') {
                   def workerImage = docker.build("saumya043/worker:v${env.BUILD_ID}", "./worker")
