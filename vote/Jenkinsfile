@@ -33,7 +33,7 @@ pipeline {
            steps {
                echo 'this is vote test job'
                dir('vote'){
-               sh 'nosetests -v'
+               sh 'nosetests  -v'
                }
            }
            }
