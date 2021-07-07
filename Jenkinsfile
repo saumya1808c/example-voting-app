@@ -189,7 +189,7 @@ pipeline {
       steps {
         echo 'this is vote integration job'
         dir(path: 'vote') {
-          sh 'integration_test.sh'
+          sh 'sh integration_test.sh'
         }
 
       }
